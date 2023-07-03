@@ -264,7 +264,7 @@ void data_check() {
 
 void set_alarm() {
    int hour, minute;
-   if ((alarm_hour > 23) && (alarm_min > 59)) {
+   if ((alarm_hour > 23) || (alarm_min > 59)) {
       clock.getTime();
       hour = clock.hour;
       minute = clock.minute;

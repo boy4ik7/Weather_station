@@ -183,7 +183,7 @@ void setup() {
 
 void loop() {
   //test_key();
-  data_check();
+  //data_check();
   btn_up.tick();
   btn_down.tick();
   btn_ok.tick();
@@ -206,6 +206,10 @@ void loop() {
     }
     info_disp();
     check_alarm();
+    delay(1000);
+}
+void yield() {
+  data_check();
 }
 /*
 void test_key() {
@@ -228,34 +232,34 @@ void test_key() {
 }
 */
 void data_check() {
-  while (true) {
-    if (tmr2.tick()) {
-      break;
+  //while (true) {
+  //  if (tmr2.tick()) {
+  //    break;
+  //  }
+    if (rx.tickWait()) {
+      DataPack data;
+      if (rx.readData(data)) {  // переписываем данные в неё
+        Pressure_out = data.Pressure_out * mm_rt_sb;
+        Temperature_out = data.Temperature_out;
+        precipitation = data.precipitation;
+        /*
+        Serial.print("Temperature - ");
+        Serial.print(data.Temperature_out);
+        Serial.print(" C");
+        Serial.println();
+        Serial.print("Pressure - ");
+        Serial.print(Pressure_out);
+        Serial.print(" mm.rt.ct");
+        Serial.println();
+        Serial.print("Precipitation - ");
+        Serial.print(data.precipitation);
+        Serial.println("%");
+        //lcd.clear(); 
+        */
+        //break;
+      }
     }
-  if (rx.tickWait()) {
-    DataPack data;
-    if (rx.readData(data)) {  // переписываем данные в неё
-      Pressure_out = data.Pressure_out * mm_rt_sb;
-      Temperature_out = data.Temperature_out;
-      precipitation = data.precipitation;
-      /*
-      Serial.print("Temperature - ");
-      Serial.print(data.Temperature_out);
-      Serial.print(" C");
-      Serial.println();
-      Serial.print("Pressure - ");
-      Serial.print(Pressure_out);
-      Serial.print(" mm.rt.ct");
-      Serial.println();
-      Serial.print("Precipitation - ");
-      Serial.print(data.precipitation);
-      Serial.println("%");
-      //lcd.clear(); 
-      */
-      break;
-    }
-  }
-  }
+  //}
 }
 
 void set_alarm() {

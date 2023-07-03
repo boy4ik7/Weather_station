@@ -11,7 +11,7 @@
 #include <EEPROM.h>
 
 TimerMs tmr1(10000, 1, 1);
-//TimerMs tmr2(1000, 1, 1);
+TimerMs tmr2(1000, 1, 1);
 TimerMs tmr3(3000, 1, 1);
 //TimerMs tmr4(120000, 1, 1);
 
@@ -165,7 +165,7 @@ void setup() {
    clock.setTime();
    aht.begin();
    tmr1.setTimerMode();
-   //tmr2.setTimerMode();
+   tmr2.setTimerMode();
    tmr3.setTimerMode();
    pinMode(tonePin, OUTPUT);
    if (EEPROM.read(INIT_ADDR) != INIT_KEY) { // первый запуск
@@ -543,240 +543,29 @@ void info_disp() {
 void check_alarm() {
    clock.getTime();
    if ((alarm_status == true) && (alarm_hour == clock.hour) && (alarm_min == clock.minute)) {
-      byte i = 10;
-      while (i--) {
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(46.511627907);
+      byte i = 61;  // сколько будет пищать будильник 60 сек + 1
+      tmr2.start();
+      while (true) {
          btn_up.tick();
          btn_down.tick();
          btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
+         btn_al.tick();
+         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held()) || (i < 1)) {
+            digitalWrite(tonePin, LOW);
             alarm_status = false;
             break;
          }
-         tone(tonePin, 2093, 62.7906976744);
-         delay(69.7674418605);
-         delay(46.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(34.8837209302);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 62.7906976744);
-         delay(69.7674418605);
-         delay(546.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(46.511627907); 
          lcd.setCursor(10, 0);
-         lcd.print(" ");
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(34.8837209302);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(34.8837209302);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(534.88372093);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         lcd.setCursor(10, 0);
-         lcd.write(4);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         delay(23.2558139535);
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(46.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(34.8837209302);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(546.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(34.8837209302);
-         lcd.setCursor(10, 0);
-         lcd.print(" ");
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(46.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(46.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(534.88372093);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 83.7209302326);
-         delay(93.023255814);
-         delay(34.8837209302);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(46.511627907);
-         lcd.setCursor(10, 0);
-         lcd.write(4);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 73.2558139535);
-         delay(81.3953488372);
-         delay(46.511627907);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
-         }
-         tone(tonePin, 2093, 62.7906976744);
-         delay(69.7674418605);
-         delay(93.023255814);
-         btn_up.tick();
-         btn_down.tick();
-         btn_ok.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held())) {
-            noTone(tonePin);
-            alarm_status = false;
-            break;
+         if (tmr2.tick()) {
+            digitalWrite(tonePin, HIGH);
+            lcd.print(" ");
+            i -= 1;
+            tmr2.start();
+         } else {
+            digitalWrite(tonePin, LOW);
+            lcd.write(4);
          }
       }
-      noTone(tonePin);
-      alarm_status = false;
-      delay(100);
    }
 }
 

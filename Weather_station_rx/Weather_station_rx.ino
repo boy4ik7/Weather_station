@@ -11,7 +11,7 @@
 #include <EEPROM.h>
 
 TimerMs tmr1(10000, 1, 1);
-TimerMs tmr2(1000, 1, 1);
+//TimerMs tmr2(1000, 1, 1);
 TimerMs tmr3(3000, 1, 1);
 //TimerMs tmr4(120000, 1, 1);
 
@@ -165,7 +165,7 @@ void setup() {
    clock.setTime();
    aht.begin();
    tmr1.setTimerMode();
-   tmr2.setTimerMode();
+   //tmr2.setTimerMode();
    tmr3.setTimerMode();
    pinMode(tonePin, OUTPUT);
    if (EEPROM.read(INIT_ADDR) != INIT_KEY) { // первый запуск

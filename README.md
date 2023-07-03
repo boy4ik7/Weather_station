@@ -1,5 +1,6 @@
 # Weather_station
 Метеостаниция и часы
+Вдохновлялся проектом <a href="https://alexgyver.ru/weatherpredict/">Электронный предсказатель погоды.</a>
 ## Используемые библиотеки
 <a href="https://github.com/adafruit/Adafruit-BMP085-Library">Adafruit_AHTX0, </a>
 <a href="https://github.com/adafruit/Adafruit_AHTX0">Adafruit_BMP085, </a>

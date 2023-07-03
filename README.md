@@ -9,7 +9,7 @@
 <a href="https://github.com/GyverLibs/buildTime">buildTime, </a>
 <a href="https://github.com/GyverLibs/Gyver433">Gyver433, </a>
 <a href="https://github.com/Seeed-Studio/RTC_DS1307">Grove - RTC DS1307.</a>
-<img src="https://github.com/boy4ik7/Weather_station/blob/main/IMG_1.jpg?raw=true" width="500">
+<img src="https://github.com/boy4ik7/Weather_station/blob/main/IMG_1.jpg?raw=true" width="200">
 <img src="https://github.com/boy4ik7/Weather_station/blob/main/IMG_2.jpg?raw=true" width="500">
 <img src="https://github.com/boy4ik7/Weather_station/blob/main/IMG_3.jpg?raw=true" width="500">
 <img src="https://github.com/boy4ik7/Weather_station/blob/main/rx.png?raw=true" width="800">

@@ -27,7 +27,6 @@ DS1307 clock;
 #define BTN1_PIN 3  // пин кнопки ВВЕРХ
 #define BTN2_PIN 11  // пин кнопки ОК
 #define BTN3_PIN 2  // пин кнопки ВНИЗ
-#define BTN_AL_PIN 6  // пин сенсорных кнопок
 #define tonePin 10  // пин пищалки
 #define battery_min 3000 // минимальный уровень заряда батареи
 #define battery_max 4200 // максимальный уровень заряда батареи
@@ -37,7 +36,6 @@ DS1307 clock;
 EncButton2<EB_BTN> btn_up(INPUT, BTN3_PIN);
 EncButton2<EB_BTN> btn_down(INPUT, BTN2_PIN);
 EncButton2<EB_BTN> btn_ok(INPUT, BTN1_PIN);
-EncButton2<EB_BTN> btn_al(INPUT, BTN_AL_PIN);
 
 //данные
 struct DataPack {
@@ -281,13 +279,18 @@ void set_alarm() {
    lcd.print("nik");
    tmr1.start();
    while (true) {
-      if (tmr1.tick()) {
-         lcd.clear();
-         break;
-      }
       btn_up.tick();
       btn_down.tick();
       btn_ok.tick();
+      if ((tmr1.tick()) || (btn_down.held())) {
+         lcd.print("Otmena");
+         lcd.setCursor(0, 1);
+         lcd.print("   ");
+         tmr1.start();
+         delay(1000);
+         lcd.clear();
+         break;
+      }
       if (btn_ok.click()) {
          if (time == true) {
             time = false;
@@ -370,7 +373,11 @@ void set_time() {
    lcd.print("Vremya");
    tmr1.start();
    while (true) {
-      if (tmr1.tick()) {
+      if ((tmr1.tick()) || (btn_up.held())) {
+         lcd.setCursor(0, 0);
+         lcd.print("Otmena");
+         delay(1000);
+         lcd.clear();
          break;
       }
       btn_up.tick();
@@ -543,27 +550,31 @@ void info_disp() {
 void check_alarm() {
    clock.getTime();
    if ((alarm_status == true) && (alarm_hour == clock.hour) && (alarm_min == clock.minute)) {
-      byte i = 61;  // сколько будет пищать будильник 60 сек + 1
+      uint8_t time = 30;  // сколько будет пищать будильник сек
+      bool tone = true;
       tmr2.start();
       while (true) {
          btn_up.tick();
          btn_down.tick();
          btn_ok.tick();
-         btn_al.tick();
-         if ((btn_up.held()) || (btn_down.held()) || (btn_ok.held()) || (btn_al.held()) || (i < 1)) {
+         if ((btn_up.hold()) || (btn_down.hold()) || (btn_ok.hold()) || (time == 0)) {
             digitalWrite(tonePin, LOW);
             alarm_status = false;
             break;
          }
          lcd.setCursor(10, 0);
          if (tmr2.tick()) {
-            digitalWrite(tonePin, HIGH);
-            lcd.print(" ");
-            i -= 1;
+            if (tone == true) {
+              digitalWrite(tonePin, HIGH);
+              lcd.print(" ");
+              tone = false;
+            } else {
+              digitalWrite(tonePin, LOW);
+              lcd.write(4);
+              tone = true;
+            }
+            time -= 1;
             tmr2.start();
-         } else {
-            digitalWrite(tonePin, LOW);
-            lcd.write(4);
          }
       }
    }

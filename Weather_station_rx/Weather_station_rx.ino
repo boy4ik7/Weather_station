@@ -157,10 +157,6 @@ void setup() {
    lcd.createChar(8, bat_40);
    lcd.createChar(0, bat_20);
    clock.begin();
-   clock.fillByYMD(BUILD_YEAR, BUILD_MONTH, BUILD_DAY);
-   clock.fillByHMS(BUILD_HOUR, BUILD_MIN, BUILD_SEC);
-   //clock.fillDayOfWeek(TUE);
-   clock.setTime();
    aht.begin();
    tmr1.setTimerMode();
    tmr2.setTimerMode();
@@ -171,6 +167,10 @@ void setup() {
       EEPROM.put(0, alarm_status);
       EEPROM.put(1, alarm_hour);
       EEPROM.put(2, alarm_min);
+     clock.fillByYMD(BUILD_YEAR, BUILD_MONTH, BUILD_DAY);
+     clock.fillByHMS(BUILD_HOUR, BUILD_MIN, BUILD_SEC);
+     //clock.fillDayOfWeek(TUE);
+     clock.setTime();
    }
    EEPROM.get(0, alarm_status);
    EEPROM.get(1, alarm_hour);

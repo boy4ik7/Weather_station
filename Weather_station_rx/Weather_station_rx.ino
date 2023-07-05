@@ -167,10 +167,10 @@ void setup() {
       EEPROM.put(0, alarm_status);
       EEPROM.put(1, alarm_hour);
       EEPROM.put(2, alarm_min);
-     clock.fillByYMD(BUILD_YEAR, BUILD_MONTH, BUILD_DAY);
-     clock.fillByHMS(BUILD_HOUR, BUILD_MIN, BUILD_SEC);
-     //clock.fillDayOfWeek(TUE);
-     clock.setTime();
+      clock.fillByYMD(BUILD_YEAR, BUILD_MONTH, BUILD_DAY);
+      clock.fillByHMS(BUILD_HOUR, BUILD_MIN, BUILD_SEC);
+      //clock.fillDayOfWeek(TUE);
+      clock.setTime();
    }
    EEPROM.get(0, alarm_status);
    EEPROM.get(1, alarm_hour);
